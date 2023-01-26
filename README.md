@@ -11,7 +11,7 @@ So what this bot can do?
 
 Why can't this bot book exact seats?
 
-    -It was the requeriment. My person who has a show and he asked for this, every time different small stage. There was no need to add this.
+    -It was the requeriment. My gf has a show and she asked for this, every time different small stage. There was no need to add this.
 
 Why there is no inline keyboards?
 
@@ -69,15 +69,15 @@ NAVIGATION
 
 DB schema:
 
-        -table all_users:
-        contains IDs of all users, who enteracted with this bot
+    -table all_users:
+    contains IDs of all users, who enteracted with this bot
 
-        -table guests:
-        contains 4 collumns for users, who booked seats:
-        1)person_id
-        2)amount (amount of seast)
-        3)token (uniq token for every book)
-        4)paid (not in use)
+    -table guests:
+    contains 4 collumns for users, who booked seats:
+    1)person_id
+    2)amount (amount of seast)
+    3)token (uniq token for every book)
+    4)paid (not in use)
 
 HOW TO RUN
 
@@ -104,4 +104,4 @@ ALSO
     -you have to set you own replies and buttons in keyboards
     -You can add pictures, but you will have to change send_message in handlers
     -You can add function for admin to add/change photos in src/data/pictures directory
-    -this bot suposed to be able to send payments via binance, but the person, who asked about this bot doesnt have merchant status yet. Maybe there will be an update and I will add this function, but for now bot is able to book only. You can add your payment system as well.
+    -this bot suposed to be able to send payments via binance, but my gf doesnt have merchant status yet. Maybe there will be an update and I will add this function, but for now bot is able to book only. You can add your payment system as well.
