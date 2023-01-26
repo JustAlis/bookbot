@@ -11,7 +11,7 @@ So what this bot can do?
 
 Why can't this bot book exact seats?
 
-    -It was the requeriment. My friend has a show and he asked for this, every time different small stage. There was no need to add this.
+    -It was the requeriment. My person who has a show and he asked for this, every time different small stage. There was no need to add this.
 
 Why there is no inline keyboards?
 
