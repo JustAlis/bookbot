@@ -4,7 +4,7 @@ HELLO GITHUB!
 
 FAQ
 
-    ###So what this bot can do?
+So what this bot can do?
 
         -This bot can book seats for the show.
         -Send promo to users
