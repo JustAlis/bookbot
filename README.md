@@ -1,23 +1,23 @@
-#HELLO GITHUB!
+HELLO GITHUB!
 
     This bot is my first project and I will be glad to get some comments, if something is wrong)
 
-##FAQ
+FAQ
 
     ###So what this bot can do?
 
         -This bot can book seats for the show.
         -Send promo to users
 
-###Why can't this bot book exact seats?
+Why can't this bot book exact seats?
 
     -It was the requeriment. My friend has a show and he asked for this, every time different small stage. There was no need to add this.
 
-###Why there is no inline keyboards?
+Why there is no inline keyboards?
 
     -I don't like them. Reply keyboard for me looks mutch better. This is just my taste.
 
-###Why did I add redis?
+Why did I add redis?
 
     -main reason to use redis is to get rid of a lot of checks for incorrect input from users. Not to allow them to send text, 
     which will fit in the handler, and to activate submenus, if their status doesnt allow that, otherwise there can be mistakes, 
@@ -26,17 +26,17 @@
     dumb and I decided to add redis to get "callback" data, which is unavailable in aiogram with inlinekeyboard.
     -I just wanted to use redis, it is pet project, and I wanteded to understand this technology better, to practice
 
-####But there are still a lot of operations in sqlite, which could be replased with redis?
+But there are still a lot of operations in sqlite, which could be replased with redis?
 
     -becouse I don't have a big amount of RAM on my server. It is actually very small.
 
-##ENV
+ENV
 
     -python 3.11
     -redis 6.0.16
     -(read requirements.txt)
 
-##NAVIGATION
+NAVIGATION
 
     src:
         config:
@@ -67,7 +67,7 @@
     readme.md(you are here)
     requirements.txt
 
-##DB schema:
+DB schema:
 
         -table all_users:
         contains IDs of all users, who enteracted with this bot
@@ -79,14 +79,14 @@
         3)token (uniq token for every book)
         4)paid (not in use)
 
-##HOW TO RUN
+HOW TO RUN
 
     -install and run redis
     -change values in config(token, admin id, total amount of seats(if you need), you can chnge redis configuration if you want to)
     -from src/data run create.py
     -from src run bot.py
 
-##USSAGE
+USSAGE
 
     ####ADMIN
     1)admin cant use handler for users
@@ -99,7 +99,7 @@
     2)user can recive promo, when admin send it
     3)user can get info about the show(host info, time_place info, and so on(check replies))
 
-##ALSO
+ALSO
 
     -you have to set you own replies and buttons in keyboards
     -You can add pictures, but you will have to change send_message in handlers
