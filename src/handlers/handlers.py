@@ -33,14 +33,14 @@ async def command_admin(message: types.Message):
 async def admin_handler(message: types.Message):
 
     #if admin wants to send promo
-    if message.text == keyboard.send_promo and await rdba.get_status(message.from_user.id) is None:
-        await rdba.admin_send_promo(message.from_user.id)
+    if message.text == keyboard.send_promo and rdba.get_status(message.from_user.id) is None:
+        rdba.admin_send_promo(message.from_user.id)
         await bot.send_message(message.from_user.id, rp.send_promo_start, parse_mode='html', disable_web_page_preview=True)
         await bot.send_message(message.chat.id, rp.promo, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.admin_warning)
 
-    elif await rdba.get_status(message.from_user.id) == "send_promo":
+    elif rdba.get_status(message.from_user.id) == "send_promo":
         if message.text == 'Yes':
-            await rdba.delete_status(message.from_user.id)
+            rdba.delete_status(message.from_user.id)
             users = await db.get_users()
             for user in users:
                 await bot.send_message(user, rp.promo, parse_mode='html', disable_web_page_preview=True)
@@ -48,7 +48,7 @@ async def admin_handler(message: types.Message):
             await bot.send_message(message.from_user.id, rp.send_promo_end, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.admin_menu)
 
         elif message.text == 'No':
-            await rdba.delete_status(message.from_user.id)
+            rdba.delete_status(message.from_user.id)
             await bot.send_message(message.from_user.id, rp.send_promo_denyed, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.admin_menu)
         
     #if admin wants to get stats
@@ -60,47 +60,47 @@ async def admin_handler(message: types.Message):
         await bot.send_message(message.chat.id, rp.stats.format(users, persons_who_booked, reserved_seats, bought_tickets), parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.admin_menu)
 
     #if admin wants to reset table
-    elif message.text == keyboard.reset_db and await rdba.get_status(message.from_user.id) is None:
-        await rdba.admin_reset_status(message.from_user.id)
+    elif message.text == keyboard.reset_db and rdba.get_status(message.from_user.id) is None:
+        rdba.admin_reset_status(message.from_user.id)
         await bot.send_message(message.chat.id, rp.reset_warning, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.admin_warning)
 
-    elif await rdba.get_status(message.from_user.id) == 'reset_table':
+    elif rdba.get_status(message.from_user.id) == 'reset_table':
         if message.text == keyboard.yes:
-            await rdba.clear_redis_tables()
+            rdba.clear_redis_tables()
             await db.clear_table()
             await bot.send_message(message.chat.id, rp.reset_reply, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.admin_menu)
         
         elif message.text == keyboard.no:
-            await rdba.delete_status(message.from_user.id)
+            rdba.delete_status(message.from_user.id)
             await bot.send_message(message.chat.id, rp.denyed_reset, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.admin_menu)
 
     #if admin wants to set new time and place
-    elif message.text == keyboard.edit_date_place and await rdba.get_status(message.from_user.id) is None:
-        await rdba.admin_change_date_time(message.from_user.id)
+    elif message.text == keyboard.edit_date_place and rdba.get_status(message.from_user.id) is None:
+        rdba.admin_change_date_time(message.from_user.id)
         await bot.send_message(message.chat.id, rp.time_place_edit_mode, reply_markup=keyboard.remove)
         await bot.send_message(message.chat.id, rp.time_place, disable_web_page_preview=True)
 
-    elif await rdba.get_status(message.from_user.id) == 'change_date_time':
+    elif rdba.get_status(message.from_user.id) == 'change_date_time':
         rp.time_place = message.text
-        await rdba.delete_status(message.from_user.id)
+        rdba.delete_status(message.from_user.id)
         await bot.send_message(message.chat.id, rp.time_place_edit_mode_end, disable_web_page_preview=True, reply_markup=keyboard.admin_menu)
         await bot.send_message(message.chat.id, rp.time_place, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.admin_menu)
 
     #if admin wants to set new promo lines
-    elif message.text == keyboard.edit_promo and await rdba.get_status(message.from_user.id) is None:
-        await rdba.admin_change_promo(message.from_user.id)
+    elif message.text == keyboard.edit_promo and rdba.get_status(message.from_user.id) is None:
+        rdba.admin_change_promo(message.from_user.id)
         await bot.send_message(message.chat.id, rp.promo_edit_mode, reply_markup=keyboard.remove)
         await bot.send_message(message.chat.id, rp.promo, disable_web_page_preview=True)
 
-    elif await rdba.get_status(message.from_user.id) == 'change_prormo':
+    elif rdba.get_status(message.from_user.id) == 'change_prormo':
         rp.promo = message.text
-        await rdba.delete_status(message.from_user.id)
+        rdba.delete_status(message.from_user.id)
         await bot.send_message(message.chat.id, rp.promo_edit_mode_end, disable_web_page_preview=True, reply_markup=keyboard.admin_menu)
         await bot.send_message(message.chat.id, rp.promo, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.admin_menu)
 
     #if admin input is incorrect:
     else:
-        await rdba.delete_status(message.from_user.id)
+        rdba.delete_status(message.from_user.id)
         await bot.send_message(message.chat.id, rp.admin_error, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.admin_menu)
 
 #handler for users
@@ -125,7 +125,7 @@ async def user_handler(message: types.Message):
     #go to menu button
     elif message.text == keyboard.go_to_main:
         #every time user goes to main theirs status resets
-        await rdb.delete_status(message.from_user.id)
+        rdb.delete_status(message.from_user.id)
         await bot.send_message(message.chat.id, choice(rp.menu), parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.main_menu)
 
     #reserving button
@@ -142,7 +142,7 @@ async def user_handler(message: types.Message):
                 #add new person to db
                 await db.add_person(message.from_user.id)
                 #set status for this person, allow them to send numbers
-                await rdb.allow_nubres(message.from_user.id)
+                rdb.allow_nubres(message.from_user.id)
                 await bot.send_message(message.chat.id, rp.amount, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.number_of_seats)
 
             else:
@@ -150,7 +150,7 @@ async def user_handler(message: types.Message):
                 amount = await db.check_amount(message.from_user.id)
                 if amount is None:
                     #set status for this person, allow them to send numbers
-                    await rdb.allow_nubres(message.from_user.id)
+                    rdb.allow_nubres(message.from_user.id)
                     await bot.send_message(message.chat.id, rp.amount, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.number_of_seats)
 
                 else:
@@ -166,18 +166,18 @@ async def user_handler(message: types.Message):
         
         else:
             #check "callback" in redis db
-            if await rdb.get_status(message.from_user.id) == "numbers_allowed":
+            if rdb.get_status(message.from_user.id) == "numbers_allowed":
                 #generate token and add amount of guests and token to db
                 token = await db.add_token_amount_get_token(message.text, message.from_user.id)
                 #delete status in rdb
-                await rdb.delete_status(message.from_user.id)
+                rdb.delete_status(message.from_user.id)
                 await bot.send_message(message.chat.id, rp.booked.format(message.text, token), parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.offer)
 
-            elif await rdb.get_status(message.from_user.id) == "change_numbers_allowed":
+            elif rdb.get_status(message.from_user.id) == "change_numbers_allowed":
                 #change amount of guests in the db
                 await db.change_amount(message.text, message.from_user.id)
                 #delete status in rdb
-                await rdb.delete_status(message.from_user.id)
+                rdb.delete_status(message.from_user.id)
                 await bot.send_message(message.chat.id, rp.changed.format(message.text), parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.offer)
             
             else:
@@ -199,7 +199,7 @@ async def user_handler(message: types.Message):
             #send chage menu buttons
             else:
                 #set status in rdb, allow user to use change menu buttons
-                await rdb.allow_change_menu(message.from_user.id)
+                rdb.allow_change_menu(message.from_user.id)
                 amount = await db.check_amount(message.from_user.id)
                 token = await db.check_token(message.from_user.id)
                 if await db.get_payment_method(message.from_user.id) is None:
@@ -211,9 +211,9 @@ async def user_handler(message: types.Message):
     #if user wants to change amount of guests
     elif message.text == keyboard.change_amount:
         #check status in rdb
-        if await rdb.get_status(message.from_user.id) == "change_menu_allowed":
+        if rdb.get_status(message.from_user.id) == "change_menu_allowed":
             #allow programm to update the num of guests
-            await rdb.allow_change_numbers(message.from_user.id)
+            rdb.allow_change_numbers(message.from_user.id)
             await bot.send_message(message.chat.id, rp.amount, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.number_of_seats)
         else:
             await bot.send_message(message.chat.id, rp.error9, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.main_menu)
@@ -221,9 +221,9 @@ async def user_handler(message: types.Message):
     #if user wants to cansel his book
     elif message.text == keyboard.cansel:
         #check status in rdb
-        if await rdb.get_status(message.from_user.id) == "change_menu_allowed":
+        if rdb.get_status(message.from_user.id) == "change_menu_allowed":
             #allow user to use accident menu buttons
-            await rdb.allow_accident_menu(message.from_user.id)
+            rdb.allow_accident_menu(message.from_user.id)
             await bot.send_message(message.chat.id, rp.accident, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.accident)
         else:
             await bot.send_message(message.chat.id, rp.error9, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.main_menu)
@@ -231,18 +231,18 @@ async def user_handler(message: types.Message):
     #if missclick
     elif message.text == keyboard.oops:
         #check status in rdb
-        if await rdb.get_status(message.from_user.id) == "accident_menu_allowed":
+        if rdb.get_status(message.from_user.id) == "accident_menu_allowed":
             #allow user to use accident menu buttons
-            await rdb.allow_change_menu(message.from_user.id)
+            rdb.allow_change_menu(message.from_user.id)
             await bot.send_message(message.chat.id, rp.missclick, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.change_menu)
         else:
             await bot.send_message(message.chat.id, rp.error10, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.main_menu)
         
     #if user is shure, that he wants to cansel his book
     elif message.text == keyboard.shure:
-        if await rdb.get_status(message.from_user.id) == "accident_menu_allowed":
+        if rdb.get_status(message.from_user.id) == "accident_menu_allowed":
             #allow user to use accident menu buttons
-            await rdb.delete_status(message.from_user.id)
+            rdb.delete_status(message.from_user.id)
             await db.cancel_book(message.from_user.id)
             await bot.send_message(message.chat.id, rp.canseled, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.main_menu)
         else:
@@ -251,7 +251,7 @@ async def user_handler(message: types.Message):
     #if user wants to buy a tickets
     elif message.text == keyboard.buy:
         #check status in rdb
-        if await rdb.get_status(message.from_user.id) == "change_menu_allowed":
+        if rdb.get_status(message.from_user.id) == "change_menu_allowed":
             #my payment method:
 
             pass
@@ -259,5 +259,5 @@ async def user_handler(message: types.Message):
             await bot.send_message(message.chat.id, rp.error9, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.main_menu)
     
     else:
-        await rdb.delete_status(message.from_user.id)
+        rdb.delete_status(message.from_user.id)
         await bot.send_message(message.chat.id, rp.global_error, parse_mode='html', disable_web_page_preview=True, reply_markup=keyboard.main_menu)
