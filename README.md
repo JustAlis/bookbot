@@ -26,10 +26,10 @@ Why did I add redis?
     dumb and I decided to add redis to get "callback" data, which is unavailable in aiogram with inlinekeyboard.
     -I just wanted to use redis, it is pet project, and I wanteded to understand this technology better, to practice
 
-But there are still a lot of operations in sqlite, which could be replased with redis?
+There is a lot of if/else logic gates in handlers, which is considered to be a bad practice
 
-    -becouse I don't have a big amount of RAM on my server. It is actually very small.
-
+    -As I got it, there is no big difference in writing a lot of handlers or writing all inside one handler using if/else gates.  
+    
 ENV
 
     -python 3.11
